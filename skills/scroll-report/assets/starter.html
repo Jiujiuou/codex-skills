@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>滚动叙事汇报页 · 模式示例</title>
+  <style>
+    :root { --primary:#3545d6; --secondary:#5363ee; --accent:#c2f74f; --ink:#0e1a27; --muted:#64748b; --paper:#f9fafb; --cool:#eef0fd; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font-family:system-ui,"Microsoft YaHei",sans-serif; }
+    .scene { min-height:100svh; padding:80px max(24px,8vw) 48px; }
+    h1 { font-size:clamp(44px,7vw,100px); color:var(--primary); margin:0 0 20px; }
+    h2 { font-size:clamp(30px,4vw,54px); margin:0; }
+    p { font-size:20px; line-height:1.7; color:var(--muted); }
+    .caption { font-size:13px; letter-spacing:.1em; color:var(--primary); }
+    .cover { display:grid; align-content:center; position:relative; overflow:hidden; }
+    .cover-copy { position:relative; z-index:1; }
+    .cover-ring { position:absolute; left:50%; top:50%; width:70vmin; aspect-ratio:1; border:2px solid var(--secondary); border-radius:50%; transform:translate(-50%,-50%); opacity:.2; }
+    .cover-mark { display:none; position:absolute; inset:0; place-items:center; }
+    .cover-mark svg { width:120px; }
+    .card { padding:28px; border:1px solid #3545d633; background:white; border-radius:16px; display:flex; flex-direction:column; justify-content:center; }
+    .card h3 { font-size:26px; color:var(--primary); margin:0 0 12px; }
+    .card p { margin:0; }
+    .slide-window { margin-top:32px; }
+    .slide-board { display:grid; gap:18px; }
+    .layers { display:grid; gap:14px; margin-top:32px; }
+    .layer { border-left:6px solid var(--primary); background:var(--cool); padding:24px; border-radius:12px; font-size:24px; }
+    .diagram { width:100%; height:auto; margin-top:24px; background:white; border:1px solid #3545d633; border-radius:16px; }
+    .diagram rect { fill:var(--cool); stroke:var(--primary); }
+    .diagram text { fill:var(--ink); font-size:19px; text-anchor:middle; }
+    .diagram .edge { fill:none; stroke:var(--secondary); stroke-width:2; stroke-dasharray:5 6; marker-end:url(#arrow); }
+    .grid { position:relative; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-top:24px; }
+    .grid .card { min-height:180px; }
+    .report-expanded { position:absolute; left:0; top:0; margin:0; z-index:2; pointer-events:none; background:white; }
+    .status { margin:0; font-size:13px; color:var(--primary); }
+    .motion .scene { height:100svh; display:grid; grid-template-rows:auto auto minmax(0,1fr) auto; gap:18px; min-height:0; }
+    .motion .cover { display:grid; grid-template-rows:1fr; }
+    .motion .cover-mark { display:grid; opacity:0; }
+    .motion .slide-window { margin:0; min-height:0; overflow:hidden; display:grid; padding-block:16px; }
+    .motion .slide-board { display:grid; grid-template-columns:minmax(0,1fr); align-items:center; min-height:0; }
+    .motion .slide-board .card { grid-area:1/1; min-height:260px; }
+    .motion .grid { margin:0; min-height:0; grid-template-rows:repeat(2,minmax(0,1fr)); }
+    .motion .grid .card { min-height:0; }
+    .motion .diagram { height:100%; min-height:0; margin:0; }
+    .motion .layers { min-height:0; align-content:center; margin:0; }
+    @media(max-width:700px) { .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <!-- Generic examples only: replace all report content with user-supplied material. -->
+  <section class="scene cover">
+    <div class="cover-ring" aria-hidden="true"></div>
+    <div class="cover-copy"><h1>滚动叙事汇报</h1><p>五种可复用讲解模式</p><p class="caption">向下滚动 · 一次聚焦一个重点</p></div>
+    <div class="cover-mark" aria-hidden="true"><svg viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="var(--accent)"/><path d="m25 50 17 17 33-34" fill="none" stroke="var(--primary)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  </section>
+  <section class="scene">
+    <span class="caption">01 · 横向逐项切换</span><h2>每次讲清一个结论</h2>
+    <div class="slide-window"><div class="slide-board">
+      <article class="card"><h3>结论一</h3><p>用实际汇报中的第一项结论替换这里。</p></article>
+      <article class="card"><h3>结论二</h3><p>当前重点稳定停留，下一次手势才切换。</p></article>
+      <article class="card"><h3>结论三</h3><p>向上滚动可以回看上一项。</p></article>
+    </div></div><p class="status" aria-live="polite">总览</p>
+  </section>
+  <section class="scene">
+    <span class="caption">02 · 总览与逐层聚焦</span><h2>先看结构，再讲每层</h2>
+    <div class="layers"><div class="layer">视图层</div><div class="layer">状态与数据层</div><div class="layer">通信层</div></div><p class="status" aria-live="polite">总览</p>
+  </section>
+  <section class="scene">
+    <span class="caption">03 · 关系图镜头</span><h2>沿依据链解释决定</h2>
+    <svg class="diagram" viewBox="0 0 900 420" role="img" aria-label="两个前提分别推导到两个结论，汇聚到整体方案">
+      <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 8 4 0 8Z" fill="var(--secondary)"/></marker></defs>
+      <g class="camera"><g class="relation"><path class="edge" d="M160 137 C160 190 330 170 330 233"/><rect x="60" y="70" width="200" height="60" rx="12"/><text x="160" y="107">前提 A</text><rect x="230" y="240" width="200" height="60" rx="12"/><text x="330" y="277">决定 A</text></g>
+      <g class="relation"><path class="edge" d="M690 137 C690 190 560 180 560 233"/><rect x="590" y="70" width="200" height="60" rx="12"/><text x="690" y="107">前提 B</text><rect x="460" y="240" width="200" height="60" rx="12"/><text x="560" y="277">决定 B</text></g></g>
+    </svg><p class="status" aria-live="polite">总览</p>
+  </section>
+  <section class="scene">
+    <span class="caption">04 · 网格展开与归位</span><h2>逐项讨论六个议题</h2>
+    <div class="grid">
+      <article class="card"><h3>议题 01</h3><p>替换为实际待讨论的事项。</p></article>
+      <article class="card"><h3>议题 02</h3><p>从原位置展开覆盖网格。</p></article>
+      <article class="card"><h3>议题 03</h3><p>再次滚动，收回后切换。</p></article>
+      <article class="card"><h3>议题 04</h3><p>正文按内容需要调整。</p></article>
+      <article class="card"><h3>议题 05</h3><p>向上滚动可反向回看。</p></article>
+      <article class="card"><h3>议题 06</h3><p>结束后回到完整总览。</p></article>
+    </div><p class="status" aria-live="polite">总览</p>
+  </section>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="report-motion.js"></script>
+  <script>
+    if (window.gsap && window.ReportMotion) {
+      gsap.matchMedia().add("(min-width:1000px) and (min-height:700px) and (prefers-reduced-motion:no-preference)", () => {
+        document.body.classList.add("motion");
+        const M = ReportMotion, scenes = [...document.querySelectorAll(".scene")];
+        const deck = M.slides(document.querySelectorAll(".slide-board .card"));
+        const layers = [...document.querySelectorAll(".layer")];
+        const svg = document.querySelector(".diagram"), camera = svg.querySelector(".camera");
+        const graph = M.diagram(svg, camera, [...svg.querySelectorAll(".relation")]);
+        const grid = M.expandGrid(document.querySelector(".grid"));
+        const states = [0, 0, 0, 0, 0], counts = [1, 3, 5, 4, 8];
+        const status = (chapter, text) => { const el = scenes[chapter].querySelector(".status"); if (el) el.textContent = text; };
+        const router = M.gestureRouter((direction) => {
+          const chapter = scenes.findIndex((scene) => Math.abs(scene.getBoundingClientRect().top) < 6);
+          if (chapter < 0) return null;
+          if (chapter === 0 && direction > 0) return async (signal) => {
+            await Promise.all([
+              new Promise((resolve) => {
+                const tl = gsap.timeline({ onComplete: resolve });
+                const cancel = () => { tl.kill(); resolve(); };
+                signal.addEventListener("abort", cancel, { once:true });
+                tl.eventCallback("onComplete", () => { signal.removeEventListener("abort", cancel); resolve(); });
+                tl.to(".cover-copy", { opacity:0, duration:0.6 }, 0)
+                  .to(".cover-ring", { width:120, opacity:1, borderRadius:"20%", backgroundColor:"#c2f74f", duration:1.6, ease:"sine.inOut" }, 0)
+                  .to(".cover-mark", { opacity:1, duration:0.35 }, 1.25)
+                  .to({}, { duration:0.5 });
+              }),
+            ]);
+            if (!signal.aborted) await M.scrollToElement(scenes[1], 1.3, signal);
+          };
+          const next = states[chapter] + direction;
+          if (next < 0 || next >= counts[chapter]) {
+            const neighbor = scenes[chapter + direction];
+            if (!neighbor) return null;
+            return async (signal) => {
+              await M.scrollToElement(neighbor, 1.3, signal);
+              if (chapter + direction === 0 && !signal.aborted) gsap.set([".cover-copy", ".cover-ring", ".cover-mark"], { clearProps:"all" });
+            };
+          }
+          return async (signal) => {
+            states[chapter] = next;
+            if (chapter === 1) { await deck.show(next, 1.1, signal); status(chapter, (next + 1) + " / 3"); }
+            if (chapter === 2) { await M.focus(layers, next === 4 ? -1 : next - 1, 0.9, signal); status(chapter, next === 4 || next === 0 ? "总览" : "聚焦第 " + next + " 层"); }
+            if (chapter === 3) { await graph.show(next === 3 || next === 0 ? null : next - 1, 1.1, signal); status(chapter, next === 3 || next === 0 ? "总览" : "依据链 " + next); }
+            if (chapter === 4) { await grid.show(next === 7 || next === 0 ? -1 : next - 1, 1.2, signal); status(chapter, next === 7 || next === 0 ? "总览" : "议题 " + next); }
+          };
+        });
+        return () => {
+          router.destroy(); deck.destroy(); graph.destroy(); grid.destroy();
+          gsap.set([".cover-copy", ".cover-ring", ".cover-mark", ...layers], { clearProps:"all" });
+          document.body.classList.remove("motion");
+          document.querySelectorAll(".status").forEach((el) => { el.textContent = "总览"; });
+        };
+      });
+    }
+  </script>
+</body>
+</html>
