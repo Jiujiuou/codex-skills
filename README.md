@@ -4,7 +4,7 @@
 
 ## miniapp-wireframe
 
-根据产品用途、核心功能和主要流程设计小程序 UI，交付细线、留白风格的完整 HTML 交互线稿。默认一个独立文件，自动适配横竖屏，并提供手动方向预览；编辑内容共用一份状态。
+根据产品用途、核心功能和主要流程设计小程序 UI，交付细线、留白风格的完整 HTML 交互线稿。默认一个独立文件，在一个视口内自动适配横竖屏，并提供手动方向预览；编辑内容共用一份状态。审阅框架默认不滚动，不显示缩放按钮、常驻设计说明或页脚文案。
 
 - 技能入口：[SKILL.md](skills/miniapp-wireframe/SKILL.md)
 - 可直接打开的单文件案例：[reference.html](skills/miniapp-wireframe/assets/reference.html)
