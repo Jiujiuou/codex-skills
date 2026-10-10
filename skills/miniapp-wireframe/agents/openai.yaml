@@ -1,0 +1,4 @@
+interface:
+  display_name: "小程序交互线稿"
+  short_description: "把产品需求设计成细线留白风格、支持横竖屏切换的单文件 HTML 交互原型"
+  default_prompt: "使用 $miniapp-wireframe，根据我的产品用途和核心功能设计小程序 UI，交付一个支持横竖屏、可直接打开操作的 HTML 线稿原型。"
